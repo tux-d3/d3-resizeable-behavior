@@ -1,13 +1,29 @@
-<script src="../tux-d3/tux-d3.js"></script>
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../expandjs/expandjs.html">
+<link rel="import" href="../tux-d3/tux-d3.html">
+<link rel="import" href="../d3-report-resize-behavior/d3-report-resize-behavior.html">
 <script>
   /* @polymerBehavior Tux.d3ResizeableBehavior */
 
   TuxD3.ResizeableBehaviorImpl =  {
-    properties: {
-      name: "ResizeableBehavior"
-    }
+
+      listeners: {
+          'resize': '_handleResize'
+      },
+
+      _handleResize: function(event) {
+            var self = this;
+            var firer = event.detail.firer;
+            // TODO this code needs to actually take into account grandparents
+            self._refresh();
+      },
+
+      _refresh: function() {
+          var self = this;
+          throw new Error("_refresh not defined in the d3-resizeable-behavior consumer", self.nodeName);
+      }
   };
 
   /* @polymerBehavior */
-  TuxD3.ResizeableBehavior = TuxD3.ResizeableBehaviorImpl;
+  TuxD3.ResizeableBehavior = [ TuxD3.ReportResizeBehavior, TuxD3.ResizeableBehaviorImpl ];
 </script>
